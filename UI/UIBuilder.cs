@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace mod_menu
 {
@@ -38,6 +39,15 @@ namespace mod_menu
             _menuRoot.AddComponent<CanvasScaler>().uiScaleMode =
                 CanvasScaler.ScaleMode.ScaleWithScreenSize;
             _menuRoot.AddComponent<GraphicRaycaster>();
+            
+            // Ensure EventSystem exists for UI input to work
+            if (Object.FindObjectOfType<EventSystem>() == null)
+            {
+                var eventSystem = new GameObject("EventSystem");
+                eventSystem.AddComponent<EventSystem>();
+                eventSystem.AddComponent<StandaloneInputModule>();
+                Object.DontDestroyOnLoad(eventSystem);
+            }
 
             // ── Root panel ────────────────────────────────────────────────
             var root = CreatePanel(_menuRoot, "Panel",
@@ -52,10 +62,6 @@ namespace mod_menu
                 new Vector2(0f, -16f), 14, ColText, FontStyle.Bold, TextAnchor.MiddleCenter);
             CreateSimpleLabel(root, "Game", "Created by Wambo420Rambo",
                 new Vector2(0f, -34f), 9, ColAccent, FontStyle.Normal, TextAnchor.MiddleCenter);
-
-            // ── Enemy counter ─────────────────────────────────────────────
-            _enemyCountLabel = CreateSimpleLabel(root, "EnemyCount", "● 0 enemies alive",
-                new Vector2(0f, -53f), 10, ColSub, FontStyle.Normal, TextAnchor.MiddleCenter);
 
             // ── Tab bar ───────────────────────────────────────────────────
             string[] tabs = { "AIMBOT", "PLAYER", "ECONOMY", "MISC" };

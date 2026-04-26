@@ -76,6 +76,17 @@ namespace mod_menu
             UpdateImmortal();
         }
 
+        void LateUpdate()
+        {
+            // Force cursor state in LateUpdate after game's Update runs
+            // This prevents the game from locking the cursor when menu is open
+            if (_visible)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+        }
+
         void OnGUI()
         {
             if (_aimbotEnabled) DrawAimbotCircle();
@@ -93,8 +104,20 @@ namespace mod_menu
         private void SetMenuVisible(bool visible)
         {
             _visible = visible;
-            Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
-            Cursor.visible = visible;
+            
+            if (visible)
+            {
+                // Unlock and show cursor - legacy input system compatible
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                // Lock and hide cursor again
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+            
             Time.timeScale = visible ? 0f : 1f;
             if (_controller != null)
                 _controller.enabled = !visible;
