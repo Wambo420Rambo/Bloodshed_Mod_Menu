@@ -22,7 +22,7 @@ namespace mod_menu
         private static readonly Color ColSub = new(0.50f, 0.50f, 0.50f, 1f);
 
         private const float MenuW = 320f;
-        private const float MenuH = 480f;
+        private const float MenuH = 440f;
         private const float HeaderH = 72f;
         private const float TabH = 34f;
 
@@ -39,7 +39,7 @@ namespace mod_menu
             _menuRoot.AddComponent<CanvasScaler>().uiScaleMode =
                 CanvasScaler.ScaleMode.ScaleWithScreenSize;
             _menuRoot.AddComponent<GraphicRaycaster>();
-            
+
             // Ensure EventSystem exists for UI input to work
             if (Object.FindObjectOfType<EventSystem>() == null)
             {
@@ -53,9 +53,13 @@ namespace mod_menu
             var root = CreatePanel(_menuRoot, "Panel",
                 new Vector2(MenuW, MenuH), new Vector2(20, -20), ColDark);
 
-            // ── Red top bar ───────────────────────────────────────────────
-            CreateSolidRect(root, "TopBar", new Vector2(MenuW, 3f),
-                new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(0f, 0f), ColAccent);
+            // ── Red border (all 4 sides) ──────────────────────────────────
+            const float b = 2f;
+            CreateSolidRect(root, "BorderTop", new Vector2(0f, b), new Vector2(0f, 1f), new Vector2(1f, 1f), Vector2.zero, ColAccent);
+            CreateSolidRect(root, "BorderBottom", new Vector2(0f, b), new Vector2(0f, 0f), new Vector2(1f, 0f), Vector2.zero, ColAccent);
+            CreateSolidRect(root, "BorderLeft", new Vector2(b, 0f), new Vector2(0f, 0f), new Vector2(0f, 1f), Vector2.zero, ColAccent);
+            CreateSolidRect(root, "BorderRight", new Vector2(b, 0f), new Vector2(1f, 0f), new Vector2(1f, 1f), Vector2.zero, ColAccent);
+
 
             // ── Title ─────────────────────────────────────────────────────
             CreateSimpleLabel(root, "Title", "Blood Menu V1.0",
@@ -68,7 +72,7 @@ namespace mod_menu
             _tabPages = new GameObject[tabs.Length];
             _tabButtonImages = new Image[tabs.Length];
 
-            float tabW = MenuW / tabs.Length;
+            float tabW = MenuW / tabs.Length - 2f;
             for (int i = 0; i < tabs.Length; i++)
             {
                 int idx = i;
@@ -80,7 +84,7 @@ namespace mod_menu
                 tr.anchorMax = new Vector2(0f, 1f);
                 tr.pivot = new Vector2(0f, 1f);
                 tr.sizeDelta = new Vector2(tabW - 1f, TabH);
-                tr.anchoredPosition = new Vector2(tabW * i, -HeaderH);
+                tr.anchoredPosition = new Vector2(tabW * i + 4f, -HeaderH);
 
                 var ti = t.AddComponent<Image>();
                 ti.color = i == 0 ? ColTabOn : ColTab;
@@ -105,11 +109,6 @@ namespace mod_menu
                 tlt.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             }
 
-            // ── Separator ─────────────────────────────────────────────────
-            CreateSolidRect(root, "Sep", new Vector2(0f, 1f),
-                new Vector2(0f, 1f), new Vector2(1f, 1f),
-                new Vector2(0f, -(HeaderH + TabH)),
-                new Color(0.22f, 0.04f, 0.04f, 1f));
 
             // ── Pages ─────────────────────────────────────────────────────
             float pageY = -(HeaderH + TabH + 2f);

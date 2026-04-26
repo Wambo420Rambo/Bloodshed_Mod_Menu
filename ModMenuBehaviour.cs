@@ -39,9 +39,6 @@ namespace mod_menu
         private List<GameObject> _cachedEnemies = new();
         private float _scanTimer;
 
-        // ── UI live labels ────────────────────────────────────────────────
-        private Text _enemyCountLabel;
-
         // ── Immortal ──────────────────────────────────────────────────────
         private bool _immortalEnabled;
         private const float maxHP = 100f;
@@ -67,9 +64,6 @@ namespace mod_menu
             {
                 _scanTimer = ScanInterval;
                 _cachedEnemies = CollectAliveEnemies();
-
-                if (_enemyCountLabel != null)
-                    _enemyCountLabel.text = $"Enemies alive: {_cachedEnemies.Count}";
             }
 
             UpdateAimbot();
@@ -104,7 +98,7 @@ namespace mod_menu
         private void SetMenuVisible(bool visible)
         {
             _visible = visible;
-            
+
             if (visible)
             {
                 // Unlock and show cursor - legacy input system compatible
@@ -117,7 +111,7 @@ namespace mod_menu
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
             }
-            
+
             Time.timeScale = visible ? 0f : 1f;
             if (_controller != null)
                 _controller.enabled = !visible;
