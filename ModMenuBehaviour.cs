@@ -27,6 +27,7 @@ namespace mod_menu
         private GameObject _radiusLabelGo;
         private GameObject _smoothingSectionGo;
         private GameObject _radiusSectionGo;
+        private bool _referencesCleared = true;
         private bool _visible;
 
         // ── Cached references ─────────────────────────────────────────────
@@ -47,8 +48,6 @@ namespace mod_menu
 
         // ──────────────────────────────────────────────────────────────────
 
-
-
         void Start()
         {
             BuildUI();
@@ -60,7 +59,7 @@ namespace mod_menu
             if (Input.GetKeyDown(ToggleKey))
                 SetMenuVisible(!_visible);
 
-            if (!IsIngame()) return;
+
             if (!EnsureReferences()) return;
 
             _scanTimer -= Time.deltaTime;
@@ -80,6 +79,13 @@ namespace mod_menu
         void OnGUI()
         {
             if (_aimbotEnabled) DrawAimbotCircle();
+        }
+
+        private void ClearPlayerReferences()
+        {
+            _player = null;
+            _cam = null;
+            _controller = null;
         }
 
         // ── Menu visibility ───────────────────────────────────────────────
@@ -123,6 +129,18 @@ namespace mod_menu
         }
         private bool EnsureReferences()
         {
+            if (!IsIngame())
+            {
+                if (!_referencesCleared)
+                {
+                    ClearPlayerReferences();
+                    _referencesCleared = true;
+                }
+                return false;
+            }
+
+            _referencesCleared = false;
+
             if (_player != null && _cam != null && _controller != null) return true;
             CachePlayerComponents();
             return _player != null && _cam != null && _controller != null;
