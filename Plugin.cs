@@ -3,7 +3,6 @@ using BepInEx.Logging;
 using BepInEx.Unity.IL2CPP;
 using Il2CppInterop.Runtime.Injection;
 
-
 namespace mod_menu
 {
     [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
@@ -15,14 +14,12 @@ namespace mod_menu
         {
             Log = base.Log;
 
-            // Register your MonoBehaviours with the IL2CPP domain BEFORE
-            // attaching them to any GameObject — this is the critical step
+            // IL2CPP requires all MonoBehaviour types to be registered
+            // before they are attached to any GameObject
             ClassInjector.RegisterTypeInIl2Cpp<ModMenuBehaviour>();
-
-            // Add a persistent runner to the scene
             AddComponent<ModMenuBehaviour>();
 
-            Log.LogInfo("Plugin loaded!");
+            Log.LogInfo($"{MyPluginInfo.PLUGIN_NAME} {MyPluginInfo.PLUGIN_VERSION} loaded.");
         }
     }
 }
