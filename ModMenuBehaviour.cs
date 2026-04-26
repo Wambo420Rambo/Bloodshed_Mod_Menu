@@ -95,6 +95,10 @@ namespace mod_menu
             _visible = visible;
             Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = visible;
+            Time.timeScale = visible ? 0f : 1f;
+            if (_controller != null)
+                _controller.enabled = !visible;
+
             _menuRoot.SetActive(visible);
         }
 

@@ -48,9 +48,9 @@ namespace mod_menu
                 new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(0f, 0f), ColAccent);
 
             // ── Title ─────────────────────────────────────────────────────
-            CreateSimpleLabel(root, "Title", "MOD MENU",
+            CreateSimpleLabel(root, "Title", "Blood Menu V1.0",
                 new Vector2(0f, -16f), 14, ColText, FontStyle.Bold, TextAnchor.MiddleCenter);
-            CreateSimpleLabel(root, "Game", "SCFPS  ·  BepInEx",
+            CreateSimpleLabel(root, "Game", "Created by Wambo420Rambo",
                 new Vector2(0f, -34f), 9, ColAccent, FontStyle.Normal, TextAnchor.MiddleCenter);
 
             // ── Enemy counter ─────────────────────────────────────────────
