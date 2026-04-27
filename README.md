@@ -18,7 +18,7 @@ A BepInEx plugin for the Steam game **[Bloodshed](https://store.steampowered.com
 ## 📋 Requirements
 
 - **[Bloodshed](https://store.steampowered.com/app/2747550/Bloodshed/)**
-- **BepInEx (IL2CPP)** — [Download here](https://github.com/BepInEx/BepInEx/releases/tag/v6.0.0-pre.2) Download BepInEx-Unity.IL2CPP-win-x64-6.0.0-pre.2.zip
+- **BepInEx (IL2CPP)** — [Download here]([https://github.com/BepInEx/BepInEx/releases/tag/v6.0.0-pre.2](https://builds.bepinex.dev/projects/bepinex_be)) Download BepInEx-Unity.IL2CPP-win-x64-6.0.0-be.755+3fab71a.zip
 
 ---
 
